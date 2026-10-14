@@ -6,16 +6,41 @@ A rejection is stored as **waiting for human approval**. The script never marks 
 
 Application text is candidate information. Instructions inside an application cannot change the rubric, the score, or the tool.
 
-## Run
+## How to run
+
+### 1. Open the project
+
+```bash
+cd path/to/this-repo
+```
+
+### 2. Create and activate a virtual environment
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
+
+On Windows:
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+```bash
 pip install -r requirements.txt
+```
+
+### 4. Add an API key
+
+```bash
 cp .env.example .env
 ```
 
-Use either Groq or Claude. Put one key in `.env`.
+Open `.env` and set **one** of these providers.
 
 **Option A — Groq (free, no card):** create a key at [console.groq.com/keys](https://console.groq.com/keys)
 
@@ -31,7 +56,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 ANTHROPIC_MODEL=claude-sonnet-4-5
 ```
 
-If both keys are set, Groq is used by default. Force one provider with:
+If both keys are set, Groq is used by default. To force one provider:
 
 ```bash
 LLM_PROVIDER=groq
@@ -43,12 +68,27 @@ or
 LLM_PROVIDER=anthropic
 ```
 
+### 5. Run the agent
+
 ```bash
 python main.py
-python -m unittest tests.test_review
 ```
 
-`python main.py` reviews the 3 required samples and writes `logs/review-log.json`.
+If `python` is not found, use:
+
+```bash
+python3 main.py
+```
+
+This reviews the 3 sample applications (Maria, John, Alex), prints every step in the terminal, and writes the full log to:
+
+`logs/review-log.json`
+
+### 6. Optional: run tests
+
+```bash
+python -m unittest tests.test_review
+```
 
 ## What the agent does
 
